@@ -1,27 +1,31 @@
 #include <app/app.hh>
 #include <app/util.hh>
 
-#include <string>
-#include <ranges>
 #include <print>
 
+#include <libre8/core/device_manager.hh>
+#include <libre8/util/fixed_endian.hh>
+#include <libre8/util/util.hh>
+#include <libre8/devices/pro2.hh>
+
 namespace app {
+    auto stuff() {
+        libre8::devices::pro2 pro2;
+        const auto packets = pro2.prep_request(0, 0x0121, 0, 0, {});
+
+        std::println("=== hid out ===");
+        for (const auto& packet : packets)  {
+            for (const auto& byte : packet)
+                std::print("{:#04x} ", static_cast<uint8_t>(byte));
+        }
+    }
+
     app::app(const program_arguments&& args) : launch_arguments { std::move(args) } {
         // program constructor
     }
 
     auto app::run() -> void {
-        // program execution
-        std::println("hi.");
-
-        auto concat_args = launch_arguments
-            | std::views::join_with(std::string { ", " })
-            | std::ranges::to<std::string>();
-
-        std::println("{}", concat_args);
-
-        // error handling
-        auto err = error_from_std_exception(std::runtime_error { "ouch my leg" });
-        scream_and_abort(std::move(err));
+        stuff();
+        return;
     }
 }

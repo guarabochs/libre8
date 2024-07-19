@@ -41,7 +41,7 @@ namespace app {
         inline auto cxx_demangle(const char* input) -> std::string {
 #ifdef __GNUG__
             int cxa_demangle_result { -1 };
-            std::unique_ptr<char, void(*)(void*)> demangled_name {
+            std::unique_ptr<char, decltype(&std::free)> demangled_name {
                 abi::__cxa_demangle(input, nullptr, nullptr, &cxa_demangle_result),
                 std::free
             };
