@@ -3,6 +3,7 @@
 #include <libre8/util/fixed_endian.hh>
 
 #include <vector>
+#include <optional>
 
 namespace libre8::devices {
     class pro2 final {
@@ -73,8 +74,8 @@ namespace libre8::devices {
                 const uint8_t operation,
                 const uint16_le request_type,
                 const uint16_le subrequest_type,
-                const uint16_le expected_sequence_size,
-                const input_data_type& data
+                const input_data_type& data,
+                const std::optional<uint16_le> expected_sequence_size = std::nullopt
             ) -> const chunked_req_type;
     };
 }

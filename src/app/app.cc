@@ -11,7 +11,10 @@
 namespace app {
     auto stuff() {
         libre8::devices::pro2 pro2;
-        const auto packets = pro2.prep_request(0, 0x0121, 0, 0, {});
+        std::array<uint8_t, 16> data = {
+        };
+
+        const auto packets = pro2.prep_request(0, 0x0121, 0, data);
 
         std::println("=== hid out ===");
         for (const auto& packet : packets)  {

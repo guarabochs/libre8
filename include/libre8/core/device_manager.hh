@@ -1,7 +1,5 @@
 #pragma once
 
-#include <libusb.h>
-
 #include <thread>
 #include <atomic>
 #include <set>
